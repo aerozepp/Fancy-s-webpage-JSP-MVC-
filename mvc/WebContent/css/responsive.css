@@ -1,0 +1,285 @@
+@media only screen and (max-width: 800px) {
+
+/*cover page===================================================================*/
+
+#cover .container{
+
+	text-align: left;
+	height: 63px;
+}	
+
+#cover #logo{
+	width :110px;
+	height :auto;
+	margin-left : 45px;
+	margin-top: 20px;
+}
+
+
+#menu .container{
+	display: none;
+}
+
+#menu .responsive_menu{
+	display: none;
+	background-color: #0077A2;
+}
+#menu .responsive_menu li{
+	border-top: 1px solid #00A9E9;
+	list-style-type: none;
+	padding-left: 20px;
+	padding-top : 8px;
+	padding-bottom : 8px;
+}
+
+#menu .responsive_menu li a{
+
+	font-size: 15px;
+	text-decoration: none;
+	color: white; 
+
+}
+
+
+
+/*signin box design============================================================*/
+
+#signin_box .signin_btn{
+	top : 9px;
+	right: 5px;
+	width : 100px;
+}	
+
+#signin_box table td{
+	width : 70px;
+}
+
+#signin_box .profile_img{
+
+	width : 40px;
+	height : 40px;
+}
+
+#signin_box .profile_img:hover{
+	cursor: pointer;
+}	
+
+#cover .lnr-menu{
+	position: absolute;
+	display: inline-block;
+	font-size: 30px;
+	top : 15px;
+	left :10px;
+	color: white;
+}
+
+#cover .lnr_menu:hover{
+	cursor: pointer;
+}
+
+#signin_box .signout_popup{
+	background-color: #0077A2;
+	display: none;
+	box-shadow: 2px 2px 2px #888888;
+}
+
+#signin_box .signin_popup{
+
+	padding-top : 10px;
+}
+
+
+/*Sign in popup================================================================*/
+
+#signin_popup .container{
+
+	display : none;
+	
+}
+#signin_popup .box{
+
+	width : 80%;
+
+}
+
+#signin_popup .table{
+	
+	width : 100%;
+}
+
+#signin_popup td{
+
+	/*border : 1px solid black;*/
+}
+
+#signin_popup .ghost{
+width : 10%;
+}
+#signin_popup .title{
+	width : 80%;
+}
+
+#signin_popup .back{
+	
+	
+	width : 10%;
+	text-align: right;
+	padding-right: 10px;
+	
+}
+
+
+#signin_popup .content{
+
+	padding-left: 20px;
+	
+
+}
+
+
+#signin_popup input[type=submit] {	
+ 
+    font-size: 18px;
+   
+}
+
+#signin_popup .up_forgot {
+
+padding-left: 20px;
+
+}
+
+
+
+/*signup popup design ==========================================================*/
+
+#signup_popup .box{
+
+	width : 98%;
+	
+}
+#signup_popup .table{
+	width :100%;
+	
+}
+
+
+
+#signup_popup .ghost{
+	width:15%;
+	
+}
+#signup_popup .title{
+	width : 200px;
+	
+}
+
+#signup_popup .back{
+	
+
+	width : 50px;
+
+	padding-right: 15px;
+
+	
+}
+
+
+#signup_popup .content{
+
+	padding-left: 10px;
+	padding-top: 15px;
+	text-align: right;
+}
+
+#signup_popup input[type=text], input[type=password], input[type=email] {
+
+	width: 70%;
+    padding: 12px 20px;
+    margin-top : 10px;
+  
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#signup_popup .submit{
+	text-align : center;
+	border-top: 1px solid #00A9E9;
+}
+
+#signup_popup .submit [type=submit] {	
+
+    font-size: 18px;    
+  
+}
+
+#signup_popup .profile{
+	padding-left: 10px;
+}
+
+
+
+/*forum popup design========================================================*/
+
+#forum_popup .box{
+
+	width : 70%;
+}
+
+#forum_popup .table{
+
+	width : 100%;
+}
+
+
+
+/*Music design===============================================================
+*/
+
+#album_img{
+	margin-top: 50px;
+	margin-bottom: 30px; 
+	width : 300px;
+	height: auto;
+}
+
+
+#tour .container .heading{
+
+	margin-top: 10%;
+
+}
+
+#tour .container .content{
+
+	margin-top: 10%;
+	height :60px;
+	line-height: 60px;
+}
+
+
+
+/*=========================================================================*/
+
+footer ul li{
+
+	margin : 4px;
+	font-size: 6px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
