@@ -130,31 +130,47 @@
 				start_topic = (page_show * per_page) - per_page;
 			else
 				start_topic = 0;
+			
+			int count = 1;
 		%>
-
 		<div class="body">
 			<c:forEach items="${messageView}" var="dto">
+
 				<a class="content"
 					href="contentView.do?topic_id=${dto.topic_id}&cur_page=<%=page_show%>">
-					<table class="box">
-						<tr>
-							<td class="image" rowspan="2"><img class="profile_img"
-								src="profile_img/default.jpg"></td>
-							<td class="title"><strong>${dto.titles} </strong></td>
-							<td class="date">${dto.topicDate}</td>
-						</tr>
-						<tr>
+					<%
+						if (count % 2 == 0) {
+					%>
+					<table class="box grey">
+						<%
+							} else {
+						%><table class="box white">
+							<%
+								}
+							%>
+							<tr>
+								<td class="image" rowspan="2"><img class="profile_img"
+									src="profile_img/default.jpg"></td>
+								<td class="title"><strong>${dto.titles} </strong></td>
+								<td class="date">${dto.topicDate}</td>
+							</tr>
+							<tr>
 
-							<td class="posted_by" colspan="2">
+								<td class="posted_by" colspan="2">
 
-								<li>Posted by&nbsp</li>
-								<li class="author">${dto.authors}</li>
+									<li class="replies"><span class="lnr lnr-bubble blue"></span>&nbsp;${dto.replies}</li>
+									<li class="likes"><span class="lnr lnr-thumbs-up blue"></span>&nbsp;${dto.likes}</li>
+									<li class="posted">Posted by</li>
+									<li class="author">${dto.authors}</li>
 
-							</td>
+								</td>
 
-						</tr>
-					</table>
+							</tr>
+						</table>
 				</a>
+				<%
+					count++;
+				%>
 			</c:forEach>
 		</div>
 
@@ -229,7 +245,8 @@
 					%> <span class='lnr lnr-pencil'></span>&nbsp;&nbsp; <span
 					class='lnr lnr-trash'></span> <%
  	} else {
- %> <a href="#"><span class='lnr lnr-thumbs-up blue'></span></a> <%
+ %> <a href="like.do?topic_id=<%=topic_id%>"><span
+						class='lnr lnr-thumbs-up blue'></span></a> <%
  	}
  %>
 				</td>
@@ -251,74 +268,71 @@
 					</form>
 				</td>
 			<tr>
-			
 			<tr>
-				<td>
-		
-				</td>
+				<td></td>
 			</tr>
-				<c:forEach items="${replyView}" var="dto_reply">
-					<tr class="reply">
-						<td class="image_box" rowspan="2"><img class="profile_img2"
-							src="profile_img/default.jpg"></td>
-						<td class="comment_author" colspan="2">${dto_reply.authors}</td>
-						<td class="comment_date" colspan="2">${dto_reply.topicDate}</td>
-					</tr>
-					<tr>
-						<td class="comment_text" colspan="2">${dto_reply.texts}</td>
-						<td class="comment_likes_box" colspan="3">
-					<%
-						if (author.equals(session_value)) {
-					%> <span class='lnr lnr-pencil'></span>&nbsp;&nbsp; <span
-					class='lnr lnr-trash'></span> <%
+			<c:forEach items="${replyView}" var="dto_reply">
+				<tr class="reply">
+					<td class="image_box" rowspan="2"><img class="profile_img2"
+						src="profile_img/default.jpg"></td>
+					<td class="comment_author" colspan="2">${dto_reply.authors}</td>
+					<td class="comment_date" colspan="2">${dto_reply.topicDate}</td>
+				</tr>
+				<tr>
+					<td class="comment_text" colspan="2">${dto_reply.texts}</td>
+					<td class="comment_likes_box" colspan="3">
+						<%
+							if (author.equals(session_value)) {
+						%> <span class='lnr lnr-pencil'></span>&nbsp;&nbsp; <span
+						class='lnr lnr-trash'></span> <%
  	} else {
  %> <a href="#"><span class='lnr lnr-thumbs-up blue'></span></a> <%
  	}
  %>
-				</td>
-					</tr>
-				</c:forEach>
+					</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 
 	</section>
-	
-	<section id="reply_edit_popup">
+
+	<section id="reply_delete_popup">
 	<div class="container">
 		<div class="box">
-		<c:forEach items="${replyView}" var="dto_reply_edit">
-			<form name="replyEdit"
-				action="reply_edit.do?reply_id=${dto_reply_edit.reply_id}" method="POST">
-				<table>
-					<tr>
-						<td class="title">
-							<h2>Edit Your Messages</h2>
-						</td>
-						<td class="back"><a href="?topic_id=<%=topic_id%>"> <span
-								class="lnr lnr-cross"></span>
-						</a></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<div class="content">
-								<input type="text" name="title" value="<%=title%>">
-								<textarea rows="4" cols="40" name="textarea"><%=text%></textarea>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="submit" colspan="2"><input type="button"
-							value="EDIT"
-							onclick="edit_submit(document.messageEdit.title, document.messageEdit.textarea)"></td>
-					</tr>
-				</table>
-			</form>
+			<c:forEach items="${replyView}" var="dto_reply_edit">
+				<form name="replyEdit"
+					action="reply_edit.do?reply_id=${dto_reply_edit.reply_id}"
+					method="POST">
+					<table>
+						<tr>
+							<td class="title">
+								<h2>Edit Your Reply</h2>
+							</td>
+							<td class="back"><a href="#"> <span
+									class="lnr lnr-cross"></span>
+							</a></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="content">
+									<input type="text" name="reply" value="">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="submit" colspan="2"><input type="button"
+								value="EDIT"
+								onclick="edit_submit(document.messageEdit.title, document.messageEdit.textarea)"></td>
+						</tr>
+					</table>
+				</form>
 			</c:forEach>
 		</div>
 	</div>
 	</section>
-	
-	
+
+
 
 
 	<section id="message_edit_popup">
