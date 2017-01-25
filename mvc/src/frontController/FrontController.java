@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import command.Command;
 import command.ContentViewCommand;
+import command.LikeCommand;
 import command.LoginCommand;
 import command.MessageCreateCommand;
 import command.MessageDeleteCommand;
@@ -123,6 +124,10 @@ public class FrontController extends HttpServlet {
 			command = new ReplyCreateCommand();
 			command.execute(request, response);
 			viewPage = "contentView.do";
+		}else if (realCommand.equals("like.do")){
+			command = new LikeCommand();
+			command.execute(request, response);
+			viewPage = "message_view.do";
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
