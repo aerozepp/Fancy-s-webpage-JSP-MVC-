@@ -162,6 +162,7 @@ public class Dao {
 		int current_page;
 		int start_topic;
 		int end_topic;
+		int topic_total = 0;
 
 		if (page_index == null) {
 			current_page = 1;
@@ -201,8 +202,9 @@ public class Dao {
 				Timestamp topicDate = resultSet.getTimestamp("topicDate");
 				int likes = resultSet.getInt("likes");
 				int replies = resultSet.getInt("replies");
-
-				Dto_Topics dto = new Dto_Topics(topic_id, authors, titles, texts, topicDate, likes, replies, current_page, start_topic);
+				topic_total++;
+				
+				Dto_Topics dto = new Dto_Topics(topic_id, authors, titles, texts, topicDate, likes, replies, topic_total, current_page, start_topic);
 				dtos.add(dto);
 				System.out.println("message viewed");
 			}
@@ -466,5 +468,77 @@ public class Dao {
 			}
 		}
 		return dtos;
+	} //reply_view
+	
+	public void like(String topic_id, String author){
+		
+		System.out.println("Dao like()");
+		int topic_index = Integer.parseInt(topic_id);
+		int is_started = 0;
+		
+		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement2 = null;
+		PreparedStatement preparedStatement3 = null;
+		Connection connection = null;
+		ResultSet resultSet = null;
+		
+		ConnectionToSql cts = new ConnectionToSql();
+		connection = cts.getConnection();
+		
+		
+		try {
+			String query_check = "SELECT * FROM likes WHERE topic_id = ? AND author = ?";
+			
+			preparedStatement = connection.prepareStatement(query_check);
+			preparedStatement.setInt(1, topic_index);
+			preparedStatement.setString(2, author);
+			
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				is_started = resultSet.getInt("is_started");
+			}
+			
+			System.out.println("is_started : " + is_started);
+			String query = null;
+			String query_count = null;
+			
+			if(is_started == 1){
+				query = "UPDATE likes SET is_liked = 0 WHERE topic_id = ? AND author = ?";
+				query_count = "UPDATE topics SET likes = likes - 1 WHERE topic_id = ?";
+			}else{
+				query = "INSERT INTO likes VALUES(likes_seq.nextval, ?, ?, 1, 1)";
+				query_count = "UPDATE topics SET likes = likes + 1 WHERE topic_id = ?";
+			}
+			
+			System.out.println(query);
+			
+			preparedStatement2 = connection.prepareStatement(query);
+			preparedStatement2.setInt(1, topic_index);
+			preparedStatement2.setString(2, author);
+			preparedStatement2.executeUpdate();
+			System.out.println("query executed");
+			
+			preparedStatement3 = connection.prepareStatement(query_count);
+			preparedStatement3.setInt(1, topic_index);
+			preparedStatement3.executeUpdate();
+				
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (resultSet != null)
+					resultSet.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
