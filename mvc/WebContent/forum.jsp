@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@page import="dto.Dto_Topics"%>
-<%@page import="java.sql.Timestamp"%>
+<%@page import="java.sql.Date"%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Enumeration"%>
+<%@ page import="java.util.Iterator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -112,7 +114,10 @@
 	int total_topic = 0;
 	int numPages;
 	int per_page = 6;
-	int start_topic;%>
+	int start_topic;
+	
+	ArrayList<Dto_Topics> dtos_check = new ArrayList<Dto_Topics>();
+	%>
 
 		<%
 			total_topic = Integer.parseInt(String.valueOf(request.getAttribute("topicNum")));
@@ -132,8 +137,70 @@
 				start_topic = 0;
 			
 			int count = 1;
-		%>
-		<div class="body">
+		
+			Dto_Topics dto_topics;	
+			dtos_check = (ArrayList)request.getAttribute("messageView");
+			Iterator itr = dtos_check.iterator();
+			%>
+				<div class="body">
+			<% 
+			while(itr.hasNext()){
+				dto_topics = (Dto_Topics)itr.next();
+			%>
+	
+	
+				<a class="content"
+					href="contentView.do?topic_id=<%=dto_topics.getTopic_id() %>&cur_page=<%=page_show%>">
+					<%
+						if (count % 2 == 0) {
+					%>
+					<table class="box grey">
+						<%
+							} else {
+						%><table class="box white">
+							<%
+								}
+					
+							%>
+							<tr>
+								<td class="image" rowspan="2"><img class="profile_img"
+									src="profile_img/default.jpg"></td>
+								<td class="title"><strong><%=dto_topics.getTitles() %> </strong></td>
+								<td class="date"><%=dto_topics.getTopicDate()%></td>
+							</tr>
+							<tr>
+
+								<td class="posted_by" colspan="2">
+								
+									<li class="replies">
+									<%if(dto_topics.isIs_replied() == true){ %>
+									<span class="lnr lnr-bubble red"></span><%}else{ %>
+									<span class="lnr lnr-bubble blue"></span><%} %>
+									&nbsp;<%=dto_topics.getReplies() %>
+									</li>
+									<li class="likes">
+									<%if(dto_topics.isIs_liked() == true){ %>
+									<span class="lnr lnr-thumbs-up red"></span><%}else{ %>
+									<span class="lnr lnr-thumbs-up blue"></span><%} %>
+									&nbsp;<%=dto_topics.getLikes() %></li>
+									
+									<li class="posted">Posted by</li>
+									<li class="author"><%=dto_topics.getAuthors() %></li>
+
+								</td>
+
+							</tr>
+						</table>
+				</a>
+				<%
+					count++;
+			}
+				%>
+		</div>
+		
+	
+
+		<%-- <div class="body">
 			<c:forEach items="${messageView}" var="dto">
 
 				<a class="content"
@@ -147,6 +214,7 @@
 						%><table class="box white">
 							<%
 								}
+					
 							%>
 							<tr>
 								<td class="image" rowspan="2"><img class="profile_img"
@@ -157,9 +225,15 @@
 							<tr>
 
 								<td class="posted_by" colspan="2">
-
-									<li class="replies"><span class="lnr lnr-bubble blue"></span>&nbsp;${dto.replies}</li>
-									<li class="likes"><span class="lnr lnr-thumbs-up blue"></span>&nbsp;${dto.likes}</li>
+								
+									<li class="replies">
+									<span class="lnr lnr-bubble blue"></span>
+									&nbsp;${dto.replies}
+									</li>
+									<li class="likes">
+									<span class="lnr lnr-thumbs-up blue"></span>
+									&nbsp;${dto.likes}</li>
+									
 									<li class="posted">Posted by</li>
 									<li class="author">${dto.authors}</li>
 
@@ -173,7 +247,7 @@
 				%>
 			</c:forEach>
 		</div>
-
+ --%>		
 
 		<div class="pagination">
 			<div class="pagination_box">
@@ -217,19 +291,19 @@
  			Dto_Topics dto2 = new Dto_Topics();
  			dto2 = (Dto_Topics) request.getAttribute("contentView");
  			String author = dto2.getAuthors().toString();
- 			Timestamp date = dto2.getTopicDate();
+ 			Date date = dto2.getTopicDate();
  			String title = dto2.getTitles().toString();
  			int topic_id = dto2.getTopic_id();
  			String text = dto2.getTexts().toString();
  %>
 
 	<div class="container">
-
+<% String is_liked = (String)request.getAttribute("is_liked");  %>
 		<table class="forum_table">
 			<tr class="head">
 				<td class="image_box" rowspan="2"><img class="profile_img"
 					src='profile_img/default.jpg'></td>
-				<td class="posted_box">Posted by</td>
+				<td class="posted_box">Posted by </td>
 				<td class="author_box"><%=author%></td>
 				<td class="date_box"><%=date%></td>
 				<td class="back_box"><a href="message_view.do"><span
@@ -245,8 +319,14 @@
 					%> <span class='lnr lnr-pencil'></span>&nbsp;&nbsp; <span
 					class='lnr lnr-trash'></span> <%
  	} else {
- %> <a href="like.do?topic_id=<%=topic_id%>"><span
-						class='lnr lnr-thumbs-up blue'></span></a> <%
+ %> <a href="like.do?topic_id=<%=topic_id%>">
+
+<%
+if(is_liked.equals("true")){
+%>
+ <span class='lnr lnr-thumbs-up red'></span><%}else{ %>
+ <span class='lnr lnr-thumbs-up blue'></span><%} %>
+ </a> <%
  	}
  %>
 				</td>
