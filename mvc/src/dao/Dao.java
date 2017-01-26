@@ -1,10 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import dto.Dto_Topics;
@@ -103,7 +103,7 @@ public class Dao {
 
 		}
 		return user_password;
-	} // login
+	} /////////////////////////////////////////////////////////////// login
 
 	public void createMessage(String author, String title, String text) {
 
@@ -144,7 +144,7 @@ public class Dao {
 
 		}
 
-	} // message create
+	} //////////////////////////////////////////////////////////// message create
 
 	public ArrayList<Dto_Topics> messageView(String cur_page) {
 
@@ -157,7 +157,6 @@ public class Dao {
 		ConnectionToSql cts = new ConnectionToSql();
 		connection = cts.getConnection();
 
-	
 		String page_index = cur_page;
 		int current_page;
 		int start_topic;
@@ -199,12 +198,13 @@ public class Dao {
 				String authors = resultSet.getString("authors");
 				String titles = resultSet.getString("titles");
 				String texts = resultSet.getString("texts");
-				Timestamp topicDate = resultSet.getTimestamp("topicDate");
+				Date topicDate = resultSet.getDate("topicDate");
 				int likes = resultSet.getInt("likes");
 				int replies = resultSet.getInt("replies");
 				topic_total++;
-				
-				Dto_Topics dto = new Dto_Topics(topic_id, authors, titles, texts, topicDate, likes, replies, topic_total, current_page, start_topic);
+
+				Dto_Topics dto = new Dto_Topics(topic_id, authors, titles, texts, topicDate, likes, replies,
+						topic_total, current_page, start_topic);
 				dtos.add(dto);
 				System.out.println("message viewed");
 			}
@@ -228,8 +228,8 @@ public class Dao {
 		}
 		System.out.println("returning dtos");
 		return dtos;
-	} // message_view
-	
+	} /////////////////////////////////////////////////////////////// message_view
+
 	public Dto_Topics contentView(String topic_id) {
 
 		System.out.println("============contectView");
@@ -257,7 +257,7 @@ public class Dao {
 				String authors = resultSet.getString("authors");
 				String titles = resultSet.getString("titles");
 				String texts = resultSet.getString("texts");
-				Timestamp topicDate = resultSet.getTimestamp("topicDate");
+				Date topicDate = resultSet.getDate("topicDate");
 				int likes = resultSet.getInt("likes");
 				int replies = resultSet.getInt("replies");
 
@@ -285,7 +285,7 @@ public class Dao {
 
 		}
 		return dto;
-	} // contentView
+	} ////////////////////////////////////////////////////////////////// contentView
 
 	public void messageEdit(String topic_id, String title, String textarea) {
 
@@ -323,7 +323,7 @@ public class Dao {
 				e.printStackTrace();
 			}
 		}
-	}// messageEdit
+	}/////////////////////////////////////////////////////////////////// messageEdit
 
 	public void messageDelete(String topic_id) {
 
@@ -357,7 +357,7 @@ public class Dao {
 			}
 		}
 
-	}// message_delete
+	}/////////////////////////////////////////////////////////////// message_delete
 
 	public void replyCreate(String topic_id, String author, String reply) {
 
@@ -368,21 +368,18 @@ public class Dao {
 		PreparedStatement preparedStatement2 = null;
 
 		Connection connection = null;
-	
 
 		ConnectionToSql cts = new ConnectionToSql();
 		connection = cts.getConnection();
 
-		
 		System.out.println(topic_index);
 		System.out.println(replies);
 		System.out.println(authors);
-		
 
 		try {
 			String query = "INSERT INTO replies VALUES(replies_seq.nextval, ?, ?, SYSDATE, ?)";
-			
-				String query_replyCount = "UPDATE topics SET replies = replies +1 WHERE topic_id = ?";
+
+			String query_replyCount = "UPDATE topics SET replies = replies +1 WHERE topic_id = ?";
 
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, authors);
@@ -404,16 +401,14 @@ public class Dao {
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
-			/*	if (preparedStatement2 != null)
-					preparedStatement2.close();*/
 				if (connection != null)
 					connection.close();
-		
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}// reply_create
+	}/////////////////////////////////////////////////////////////// reply_create
 
 	public ArrayList<Dto_Topics> replyView(String topic_id) {
 
@@ -435,18 +430,18 @@ public class Dao {
 			preparedStatement = connection.prepareStatement(query_view);
 			preparedStatement.setInt(1, topic_index);
 			resultSet = preparedStatement.executeQuery();
-		
+
 			while (resultSet.next()) {
 
 				int rep_id = resultSet.getInt("reply_id");
 				String authors = resultSet.getString("authors");
 				String texts = resultSet.getString("texts");
-				Timestamp rep_date = resultSet.getTimestamp("repdate");
+				Date rep_date = resultSet.getDate("repdate");
 
-				System.out.println("rep_id : "+rep_id);
-				System.out.println("authors : "+authors);
+				System.out.println("rep_id : " + rep_id);
+				System.out.println("authors : " + authors);
 				System.out.println("texts : " + texts);
-				
+
 				dto = new Dto_Topics(rep_id, authors, texts, rep_date);
 				dtos.add(dto);
 			}
@@ -468,61 +463,159 @@ public class Dao {
 			}
 		}
 		return dtos;
-	} //reply_view
-	
-	public void like(String topic_id, String author){
-		
+	} // ///////////////////////////////////////////////////////////////////reply_view
+
+	public void like(String topic_id, String author) {
+
 		System.out.println("Dao like()");
 		int topic_index = Integer.parseInt(topic_id);
 		int is_started = 0;
-		
+		int is_liked = 0;
+
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement2 = null;
 		PreparedStatement preparedStatement3 = null;
 		Connection connection = null;
 		ResultSet resultSet = null;
-		
+
 		ConnectionToSql cts = new ConnectionToSql();
 		connection = cts.getConnection();
-		
-		
+
 		try {
 			String query_check = "SELECT * FROM likes WHERE topic_id = ? AND author = ?";
-			
+
 			preparedStatement = connection.prepareStatement(query_check);
 			preparedStatement.setInt(1, topic_index);
 			preparedStatement.setString(2, author);
-			
+
 			resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()){
+
+			while (resultSet.next()) {
 				is_started = resultSet.getInt("is_started");
+				is_liked = resultSet.getInt("is_liked");
 			}
-			
+
 			System.out.println("is_started : " + is_started);
 			String query = null;
 			String query_count = null;
-			
-			if(is_started == 1){
-				query = "UPDATE likes SET is_liked = 0 WHERE topic_id = ? AND author = ?";
-				query_count = "UPDATE topics SET likes = likes - 1 WHERE topic_id = ?";
-			}else{
+
+			if (is_started == 1) {
+
+				if (is_liked == 1) {
+					query = "UPDATE likes SET is_liked = 0 WHERE topic_id = ? AND author = ?";
+					query_count = "UPDATE topics SET likes = likes - 1 WHERE topic_id = ?";
+				} else {
+					query = "UPDATE likes SET is_liked = 1 WHERE topic_id = ? AND author = ?";
+					query_count = "UPDATE topics SET likes = likes + 1 WHERE topic_id = ?";
+				}
+			} else {
 				query = "INSERT INTO likes VALUES(likes_seq.nextval, ?, ?, 1, 1)";
 				query_count = "UPDATE topics SET likes = likes + 1 WHERE topic_id = ?";
 			}
-			
+
 			System.out.println(query);
-			
+
 			preparedStatement2 = connection.prepareStatement(query);
 			preparedStatement2.setInt(1, topic_index);
 			preparedStatement2.setString(2, author);
 			preparedStatement2.executeUpdate();
 			System.out.println("query executed");
-			
+
 			preparedStatement3 = connection.prepareStatement(query_count);
 			preparedStatement3.setInt(1, topic_index);
 			preparedStatement3.executeUpdate();
-				
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (resultSet != null)
+					resultSet.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	} /////////////////////////////////////////////////////////////////////////like
+
+	public String likeCheck(String topic_id, String author) {
+
+		int topic_index = Integer.parseInt(topic_id);
+		String is_liked = "false";
+
+		PreparedStatement preparedStatement = null;
+		Connection connection = null;
+		ResultSet resultSet = null;
+
+		ConnectionToSql cts = new ConnectionToSql();
+		connection = cts.getConnection();
+
+		try {
+			String query = "SELECT * FROM likes WHERE topic_id = ? AND author = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, topic_index);
+			preparedStatement.setString(2, author);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				int is_like = resultSet.getInt("is_liked");
+
+				if (is_like == 1) {
+					is_liked = "true";
+				} else
+					is_liked = "false";
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (resultSet != null)
+					resultSet.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("is_liked : " + is_liked);
+		return is_liked;
+	} ///////////////////////////////////////////////////////////////////like check
+	
+	public String replyCheck(String topic_id, String author){
+		
+		int topic_index = Integer.parseInt(topic_id);
+		String is_replied = "false";
+
+		PreparedStatement preparedStatement = null;
+		Connection connection = null;
+		ResultSet resultSet = null;
+
+		ConnectionToSql cts = new ConnectionToSql();
+		connection = cts.getConnection();
+		
+		try {
+			String query = "SELECT * FROM replies WHERE topic_id = ? AND authors = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, topic_index);
+			preparedStatement.setString(2, author);
+			resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next()) {
+				is_replied = "true";
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -540,5 +633,6 @@ public class Dao {
 			}
 		}
 		
+		return is_replied;
 	}
 }
