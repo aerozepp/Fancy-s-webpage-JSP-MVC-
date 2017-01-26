@@ -48,7 +48,7 @@
 			session_name = enumerate.nextElement().toString();
 			session_value = (String) session.getAttribute(session_name);
 		}
-	%>
+	%>  //check if the user is logged in or not
 
 	<section id="forum_menu">
 	<div class="container">
@@ -110,11 +110,11 @@
 
 	<section id="forum_page">
 	<div class="container">
-		<%!int page_show;
-	int total_topic = 0;
-	int numPages;
-	int per_page = 6;
-	int start_topic;
+		<%!int page_show; //current_page
+	int total_topic = 0; // total number of topics
+	int numPages; //total number of pages to show 
+	int per_page = 6; // number of topics per page
+	int start_topic; // topic_id to show at the first row for each page (need for SQL limit)
 	
 	ArrayList<Dto_Topics> dtos_check = new ArrayList<Dto_Topics>();
 	%>
