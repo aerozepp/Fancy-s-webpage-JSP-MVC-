@@ -1,0 +1,496 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Questrial', sans-serif;
+	color: #323C3C;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+#music, #tour {
+	background-color: #FEF200;
+	width: 100%;
+}
+
+/*Sign in popup*/
+#signin_popup .container {
+	width: 100%;
+	position: absolute;
+	display: none;
+	text-align: center;
+	z-index: 1000;
+}
+
+#signin_popup .box {
+	width: 500px;
+	display: inline-block;
+	background-color: white;
+	text-align: center;
+}
+
+#signin_popup .table {
+	width: 100%;
+	top: 70px;
+	border-collapse: collapse;
+	border-radius: 4px;
+}
+
+#signin_popup td {
+	/*border : 1px solid black;*/
+	
+}
+
+#signin_popup .ghost {
+	width: 18%;
+	background-color: #005E82;
+}
+
+#signin_popup .title {
+	background-color: #005E82;
+	text-align: center;
+	width: 300px;
+	height: 50px;
+}
+
+#signin_popup .title h2 {
+	color: white;
+}
+
+#signin_popup .back {
+	background-color: #005E82;
+	width: 18%;
+	text-align: right;
+	padding-right: 20px;
+	font-size: 25px;
+}
+
+#signin_popup .back a {
+	text-decoration: none;
+}
+
+#signin_popup .back span {
+	color: white;
+}
+
+#signin_popup .back span:hover {
+	color: black;
+}
+
+#signin_popup .content {
+	color: grey;
+	padding-left: 40px;
+	padding-top: 20px;
+	text-align: center;
+}
+
+#signin_popup input[type=text], #signin_popup input[type=password] {
+	width: 80%;
+	padding: 12px 20px;
+	margin-top: 20px;
+	margin-left: 4%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#signin_popup .submit input[type=button]{
+	width: 100px;
+	background-color: white;
+	color: #005E82;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+	cursor: pointer;
+	font-size: 23px;
+	border: none;
+	text-align: right;
+}
+
+#signin_popup .up_forgot {
+	border-top: 1px solid #00A9E9;
+	text-align: left;
+	padding-left: 60px;
+}
+
+#signin_popup .up_forgot ul {
+	display: inline-block;
+}
+
+#signin_popup .up_forgot li {
+	list-style-type: none;
+	margin-right: 20px;
+	float: left;
+	margin-top: 5px;
+}
+
+#signin_popup .up_forgot li a {
+	color: #005E82;
+	text-decoration: none;
+}
+
+#signin_popup .submit {
+	text-align: center;
+	border-top: 1px solid #00A9E9;
+}
+
+/*Sign UP popup===================================================================*/
+#signup_popup .container {
+	width: 100%;
+	position: absolute;
+	text-align: center;
+	z-index: 1100;
+	display: none;
+}
+
+#signup_popup .box {
+	width: 50%;
+	display: inline-block;
+	background-color: white;
+}
+
+#signup_popup .table {
+	width: 100%;
+	border-radius: 4px;
+	border-collapse: collapse;
+}
+
+#signup_popup .ghost {
+	width: 20%;
+	background-color: #005E82;
+}
+
+#signup_popup .title {
+	width: 300px;
+	background-color: #005E82;
+	text-align: center;
+	height: 50px;
+}
+
+#signup_popup .title h2 {
+	color: white;
+}
+
+#signup_popup .back {
+	background-color: #005E82;
+	width: 20%;
+	text-align: right;
+	padding-right: 20px;
+	font-size: 25px;
+}
+
+#signup_popup .back a {
+	text-decoration: none;
+}
+
+#signup_popup .back span {
+	color: white;
+}
+
+#signup_popup .back span:hover {
+	color: black;
+}
+
+#signup_popup .content {
+	color: grey;
+	padding-left: 10px;
+	padding-top: 15px;
+	text-align: right;
+}
+
+#signup_popup input[type=text], input[type=password], input[type=email]
+	{
+	width: 80%;
+	padding: 12px 20px;
+	margin-top: 10px;
+	margin-left: 10%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#signup_popup .submit {
+	text-align: center;
+	border-top: 1px solid #00A9E9;
+}
+
+#signup_popup .submit input[type=button] {
+	width: 100px;
+	background-color: white;
+	color: #005E82;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-right: 10%;
+	font-size: 23px;
+	cursor: pointer;
+	border: none;
+}
+
+#signup_popup .profile {
+	padding-left: 0px;
+}
+
+#signup_popup .up_forgot {
+	border-top: 1px solid #00A9E9;
+}
+
+/*forum popup design=============================================================*/
+#forum_popup .container {
+	display: none;
+	position: fixed;
+	width: 100%;
+	text-align: center;
+	z-index: 1000;
+}
+
+#forum_popup .box {
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+}
+
+#forum_popup .table {
+	width: 60%;
+	border-collapse: collapse;
+	display: inline-block;
+	background-color: white;
+	top: 70px;
+	border-radius: 4px;
+}
+
+#forum_popup td {
+	/*	border : 1px solid black;*/
+	
+}
+
+#forum_popup .ghost {
+	width: 20%;
+	background-color: #005E82;
+}
+
+#forum_popup .title {
+	width: 300px;
+	background-color: #005E82;
+	text-align: center;
+}
+
+#forum_popup .title h2 {
+	color: white;
+}
+
+#forum_popup .back {
+	background-color: #005E82;
+	text-align: center;
+	width: 20%;
+	height: 50px;
+}
+
+#forum_popup .back a {
+	text-decoration: none;
+}
+
+#forum_popup .back span {
+	font-size: 23px;
+	color: white;
+}
+
+#forum_popup .content {
+	text-align: center;
+	height: 110px;
+	line-height: 110px;
+}
+
+
+/*cover page=================================================
+*/
+#cover .container {
+	background-color: #0077A2;
+	/*background-color: #8C02A0;*/
+	width: 100%;
+	text-align: center;
+	height: auto;
+}
+
+#cover #logo {
+	margin-top: 3%;
+	display: inline-block;
+	margin-bottom: 1%;
+	width: 500px;
+	height: auto;
+}
+
+#cover #logo:hover {
+	cursor: pointer;
+}
+
+/*signin_box design=================================================================*/
+#signin_box .signin_btn {
+	z-index: 2000;
+	position: absolute;
+	text-align: right;
+	width: 10%;
+	top: 25px;
+	right: 15px;
+}
+
+#signin_box table {
+	display: inline-block;
+}
+
+#signin_box table td {
+	width: 100px;
+	text-align: center;
+}
+
+
+#signin_box .profile_img {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+#signin_box .profile_img:hover {
+	cursor: pointer;
+}
+
+#cover .lnr-menu {
+	display: none;
+}
+
+#signin_box .signout_popup a {
+	color: white;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+#signin_box .signin_popup a {
+	color: white;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+#signin_box a:hover {
+	color: #FEF200;
+}
+
+/*menu bar==========================================================================
+*/
+#menu .container {
+	/*background-color: #8C02A0;*/
+	background-color: #0077A2;
+	width: 100%;
+	height: 60px;
+	text-align: center;
+}
+
+#menu nav ul {
+	width: 100%;
+	list-style-type: none;
+	display: inline-block;
+	text-align: center;
+	margin-top: 15px;
+}
+
+#menu nav ul li {
+	width: 10%;
+	font-size: 1.3em;
+	display: inline-block;
+	text-decoration: none;
+	color: white;
+	margin: 7px;
+}
+
+#menu nav ul li a {
+	text-decoration: none;
+	color: white;
+}
+
+#menu nav ul li a:hover {
+	color: #FEF200;
+}
+
+#menu .responsive_menu {
+	display: none;
+}
+
+/*fancy's page design==============================================================*/
+#music .container {
+	width: 100%;
+	text-align: center;
+	height: 700px;
+}
+
+#album_img {
+	width: 448.067px;
+	display: inline-block;
+	height: auto;
+	margin-top: 5%;
+	box-shadow: 5px 5px 5px #888888;
+}
+
+#music .buying {
+	display: inline-block;
+	width: 200px;
+	margin-top: 4%;
+	border: 3px solid #323C3C;
+	height: 50px;
+	line-height: 50px;
+}
+
+#music .buying:hover {
+	background-color: #323C3C;
+	cursor: pointer;
+}
+
+#music .buying a {
+	text-decoration: none;
+}
+
+/*tour design==================================================================*/
+#tour .container {
+	border-top: 1px solid #323C3C;
+	width: 100%;
+	height: 700px;
+	text-align: center;
+}
+
+#tour .container .heading {
+	margin-top: 5%;
+	display: block;
+}
+
+#tour h1 {
+	font-size: 4em;
+}
+
+#tour .container .content {
+	border: 2px solid #323C3C;
+	width: 80%;
+	display: inline-block;
+	margin-top: 5%;
+	height: 80px;
+	line-height: 80px;
+}
+
+/*footer design=====================================================================*/
+footer .container {
+	padding-bottom: 20px;
+	background-color: white;
+	width: 100%;
+	text-align: center;
+}
+
+footer .container ul {
+	display: inline-block;
+	width: 40%;
+	margin-top: 20px;
+	text-align: center;
+}
+
+footer ul li {
+	margin: 7px;
+	font-size: 9px;
+	list-style-type: none;
+	display: inline-block;
+}
